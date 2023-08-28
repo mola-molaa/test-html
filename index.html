@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="container">
+        <div class="box">
+            <div contenteditable="true" class="paragraph" id="first">BlockSuite is a comprehensive project that aims to provide a progressive solution for building collaborative applications. It includes a block-based framework for composing rich content editors, as well as an out-of-the-box block editor tailored for the AFFiNE knowledge base. The core concept behind BlockSuite is block-based editing, where text editing and state management are all handled on a block-by-block basis</div>
+            <div contenteditable="true" class="paragraph" id="second">In traditional rich text editors, all content resides within a single contenteditable DOM element. This approach presents numerous compatibility challenges and can be difficult to integrate with modern UI frameworks</div>
+            <div contenteditable="true" class="paragraph" id="third">The block-based editing architecture of BlockSuite may appear simple, but in reality, it requires advanced CRDT (Conflict-free Replicated Data Types) technology to make it possible. This is because state changes in complex document editing scenarios often occur across multiple blocks. Coordinating state changes among numerous rich text instances can be challenging, especially when it comes to tracing historical states.</div>
+        </div>
+        <button onclick="onCrossSelection(event)">跨选区</button>
+    </div>
+</body>
+<style>
+    #container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+    }
+    .box {
+        border: 1px solid tomato;
+        margin: 20px;
+        padding: 20px;
+        width: 400px;
+    }
+    .paragraph {
+        outline: none;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid cadetblue;
+    }
+    button {
+        width: 60px;
+    }
+</style>
+<script>
+    function onCrossSelection(e) {
+        e.preventDefault();
+        const firstTextNode = document.getElementById('first').childNodes[0];
+        const thirdTextNode = document.getElementById('third').childNodes[0];
+        console.log('123', firstTextNode, thirdTextNode)
+        const range = document.createRange();
+        range.setStart(firstTextNode, 10);
+        range.setEnd(thirdTextNode, 20);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+</script>
+</html>
